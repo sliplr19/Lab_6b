@@ -10,7 +10,9 @@ output: github_document
 ```{r load-packages, message = FALSE, warning = FALSE}
 library(tidyverse) 
 #install.packages("mosaicData")
+#install.packages("wesanderson")
 library(mosaicData) 
+library(wesanderson)
 ```
 
 ### Exercise 1
@@ -22,13 +24,41 @@ I think this is an observational study. This is because I highly doubt they intr
 
 ### Exercise 2
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+
+```{r nrow}
+nrow(Whickham)
+```
+There are 1314 observations, which represent individuals.
 
 ### Exercise 3
 
-...
 
-Add exercise headings as needed.
+```{r nrow}
+ncol(Whickham)
+```
+There are three variables in this dataset: outcome (categorical), smoker (categorical), and age (discrete because it can only take on integer values).
+
+For the visualization, I was originally going to do some pie charts for the categorical variables. After doing some reading, I am now convinced that pie charts can be difficult to read, so I should use something easier to compare: a bar graph.
+
+```{r outcome_bar}
+Whickham %>%
+  ggplot(aes(x=outcome, fill = outcome)) +
+  geom_bar() +
+ scale_fill_manual(values=wes_palette(n=2, name="Darjeeling2"))+
+  labs(title = "Outcome counts", x = "Outcome", y = "Count", fill = "Outcome")
+```
+```{r smoker_bar}
+Whickham %>%
+  ggplot(aes(x=smoker, fill = smoker)) +
+  geom_bar() +
+ scale_fill_manual(values=wes_palette(n=2, name="Royal1"))+
+  labs(title = "Smoker counts", x = "Smoker status", y = "Count", fill = "Smoker status")
+```
+```{r smoker_bar}
+Whickham %>%
+  ggplot(aes(x=factor(age))) +
+  geom_bar(stat = "count") +
+ scale_fill_manual(values=wes_palette(n=1, name="Royal2"))+
+  labs(title = "Age counts", y = "Count") +
+  scale_x_discrete("Age", breaks = c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100), labels = c("10", "20", "30", "40", "50", "60", "70", "80", "90", "100"))
+```
