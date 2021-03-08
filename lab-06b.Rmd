@@ -1,23 +1,24 @@
 ---
 title: "Lab 06b - Simpson's paradox"
-author: "Insert your name here"
-date: "Insert date here"
+author: "Lindley Slipetz"
+date: "3/8/2021"
 output: github_document
 ---
 
 ### Load packages and data
 
-```{r load-packages, message = FALSE}
+```{r load-packages, message = FALSE, warning = FALSE}
 library(tidyverse) 
+#install.packages("mosaicData")
 library(mosaicData) 
 ```
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r load_data}
+data(Whickham)
+```
+I think this is an observational study. This is because I highly doubt they introduced smoking to certain people as an experimental condition and saw if they died. Instead, I think they observed people who were already smokers and non-smokers to check their living status.
 
 ### Exercise 2
 
