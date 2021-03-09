@@ -105,3 +105,15 @@ Whickham %>%
 ```
 I tried for a long while to get those labels to be percentages instead of counts. Rather than toiling for hours like I usually do, I gave myself a time limit to figure it out. I didn't figure it out within the time limit, so we're sticking with counts!
   
+  
+### Exercise 6
+
+```{r age_cat}
+Whickham %>%
+  mutate(age_cat = case_when(
+    age <= 44 ~ "18-44",
+    age > 44 & age <= 64 ~ "45-64",
+    age > 64 ~ "65+"
+  ))
+
+```
