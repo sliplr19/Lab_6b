@@ -33,7 +33,7 @@ There are 1314 observations, which represent individuals.
 ### Exercise 3
 
 
-```{r nrow}
+```{r ncol}
 ncol(Whickham)
 ```
 There are three variables in this dataset: outcome (categorical), smoker (categorical), and age (discrete because it can only take on integer values).
@@ -54,7 +54,7 @@ Whickham %>%
  scale_fill_manual(values=wes_palette(n=2, name="Royal1"))+
   labs(title = "Smoker counts", x = "Smoker status", y = "Count", fill = "Smoker status")
 ```
-```{r smoker_bar}
+```{r age_counts}
 Whickham %>%
   ggplot(aes(x=factor(age))) +
   geom_bar(stat = "count") +
@@ -93,7 +93,7 @@ About 72% of the sample is alive and 28% of the sample is dead. The probability 
 
 
 
-```{r smoker_bar}
+```{r smoker_out}
 Whickham %>%
   ggplot(aes(x=smoker, fill = outcome)) +
   geom_bar(stat="count") +
@@ -109,7 +109,7 @@ I tried for a long while to get those labels to be percentages instead of counts
 ### Exercise 6
 
 ```{r age_cat}
-Whickham %>%
+Whickham <- Whickham %>%
   mutate(age_cat = case_when(
     age <= 44 ~ "18-44",
     age > 44 & age <= 64 ~ "45-64",
@@ -117,3 +117,33 @@ Whickham %>%
   ))
 
 ```
+
+```{r cat_out_s_graph}
+Whickham %>%
+  ggplot(aes(x=smoker, fill = outcome)) +
+  geom_bar(stat="count") +
+ scale_fill_manual(values=wes_palette(n=2, name="BottleRocket2"))+
+  labs(title = "Smoker outcomes", x = "Smoker status", y = "Count", fill = "Outcome") +
+  facet_wrap(.~age_cat)
+
+```
+
+```{r all_count}
+Whickham %>%
+  count(smoker, age_cat, outcome)
+```
+```{r cond_age}
+tot_d_n_18 <- 12/(12+327)
+tot_d_n_18
+tot_d_s_18 <- 15/(15+270)
+tot_d_s_18
+tot_d_n_45 <- 53/(53+147)
+tot_d_n_45
+tot_d_s_45 <- 80/(80+167)
+tot_d_s_45
+tot_d_n_65 <- 165/(28+165)
+tot_d_n_65
+tot_d_s_65 <- 44/50
+tot_d_s_65
+```
+After looking at the probabilities of being dead in each age group, there is a higher probability of being dead given that one is a smoker for each age group. We also see that with the graph. This is an example of Simpson's paradox because the inclusion of the age category variable changes the interpretation of the relationship between smoking status and outcome.
