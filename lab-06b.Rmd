@@ -62,3 +62,46 @@ Whickham %>%
   labs(title = "Age counts", y = "Count") +
   scale_x_discrete("Age", breaks = c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100), labels = c("10", "20", "30", "40", "50", "60", "70", "80", "90", "100"))
 ```
+
+### Exercise 4
+
+I would expect there to be a higher mortality for smokers than for non-smokers.
+
+### Exercise 5
+
+```{r sm_out}
+SM_out_count <- Whickham %>%
+  count(smoker, outcome)
+```
+
+```{r cond_prob}
+tot_a <- 945/1314
+tot_a
+tot_d <- 369/1314
+tot_d
+a_s <- 443/582
+a_s
+d_s <- 139/582
+d_s
+a_ns <- 502/732
+a_ns
+d_ns <- 230/732
+d_ns
+
+```
+About 72% of the sample is alive and 28% of the sample is dead. The probability of being alive given you're a smoker is .76, while the probability of being dead given you're a smoker is .24. The probability of being alive given you're a nonsmoker is .69, while the probability of being dead given you're a smoker is .31. This makes it look like you're more likely to be dead if you're a non-smoker. I think this is a clear case of Simpson's paradox (i.e., other variables account for the deaths). Let's look at a graph.
+
+
+
+```{r smoker_bar}
+Whickham %>%
+  ggplot(aes(x=smoker, fill = outcome)) +
+  geom_bar(stat="count") +
+ scale_fill_manual(values=wes_palette(n=2, name="BottleRocket1"))+
+  labs(title = "Smoker outcomes", x = "Smoker status", y = "Count", fill = "Outcome") +
+  geom_text(colour = "white", stat='count',  aes(label = ..count..), vjust = 2)
+
+  
+```
+I tried for a long while to get those labels to be percentages instead of counts. Rather than toiling for hours like I usually do, I gave myself a time limit to figure it out. I didn't figure it out within the time limit, so we're sticking with counts!
+  
